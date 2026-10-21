@@ -63,8 +63,10 @@
   const fontReady = document.fonts ? document.fonts.ready : Promise.resolve();
   Promise.all([
     Promise.race([fontReady, new Promise(resolve => setTimeout(resolve, 4000))]),
-    new Promise(resolve => setTimeout(resolve, reducedMotion.matches ? 100 : 2600))
+    new Promise(resolve => setTimeout(resolve, reducedMotion.matches ? 100 : 1600))
   ]).then(async () => {
+    loadingScreen.classList.add('has-note');
+    await new Promise(resolve => setTimeout(resolve, reducedMotion.matches ? 1200 : 2100));
     // Crossfade the heart and the card together, on the same background.
     document.body.classList.remove('is-loading');
     document.body.classList.add('is-ready');

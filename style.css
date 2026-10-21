@@ -127,3 +127,22 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 .visible .letter-bottom{animation:soft-reveal .6s ease .35s both}
 .visible .photo-print{animation:photo-arrive .6s var(--paper-ease) .3s both}
 @media(prefers-reduced-motion:reduce){.letter-dialog{transform:none}}
+/* A handwritten sound reminder appears after the heart has formed. */
+.loading-screen{grid-template-columns:minmax(0,1fr)}
+.loading-composition{position:relative;width:340px;justify-self:center;text-align:center}
+.loading-note{position:relative;margin:20px 0 0;font-family:Caveat,cursive;font-size:29px;line-height:1.3;color:#dfb4b3;opacity:0;filter:blur(4px);transform:translateY(9px);transition:opacity .8s ease,transform .8s var(--ease),filter .8s ease}
+.loading-note span{display:block}
+.loading-note span+span{font-size:24px;color:#b997a2;margin-top:4px}
+.has-note .loading-note{opacity:1;filter:blur(0);transform:translateY(0)}
+.is-dissolving .loading-note{opacity:0;filter:blur(7px);transform:translateY(-8px);transition-duration:1.3s}
+@media(max-width:360px){.loading-composition{transform:scale(.85)}}
+@media(prefers-reduced-motion:reduce){.loading-note{transform:none;filter:none}.is-dissolving .loading-note{transform:none;filter:none}}
+/* The heart stays at the screen center; captions do not shift its layout. */
+.loading-composition{width:340px;height:300px;transform:none;transform-origin:center}
+.loading-note{position:absolute;margin:0;left:0;width:100%;white-space:nowrap}
+.heart-message{top:132px;font-size:27px;line-height:1.3}
+.sound-reminder{top:320px;font-size:25px;color:#b997a2}
+@media(max-width:380px){.loading-composition{transform:scale(.9)}}
+@media(max-width:340px){.loading-composition{transform:scale(.8)}}
+@media(max-height:480px){.loading-composition{transform:scale(.75)}}
+@media(prefers-reduced-motion:reduce){.loading-composition .word-heart{transform:none}}
