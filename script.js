@@ -8,6 +8,13 @@
   let noBecameYes = false;
   const overlay = document.querySelector('#overlay');
   const closeButton = document.querySelector('#close');
+  const music = document.querySelector('#birthday-music');
+  const musicVolume = .25;
+  music.volume = 0;
+  let musicGain;
+  let musicFadeFrame = 0;
+  let musicStopTimer = 0;
+  let musicEnding = false;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let state = 'closed';
   let audio;
@@ -82,7 +89,66 @@
     setTimeout(() => { loadingScreen.hidden = true; }, reducedMotion.matches ? 0 : 300);
   });
 
-  // All sounds are synthesized locally; audio starts only after a user gesture.
+  // Music starts in the click handler so mobile browsers allow playback.
+  function prepareMusic() {
+    const ctx = getAudio();
+    if (!ctx || musicGain) return;
+    try {
+      const source = ctx.createMediaElementSource(music);
+      musicGain = ctx.createGain();
+      musicGain.gain.value = 0;
+      source.connect(musicGain).connect(ctx.destination);
+      music.volume = 1;
+    } catch { /* Use the media element volume if Web Audio is unavailable. */ }
+  }
+  function fadeMusic(target, duration) {
+    cancelAnimationFrame(musicFadeFrame);
+    if (musicGain) {
+      const now = audio.currentTime;
+      const gain = musicGain.gain;
+      if (typeof gain.cancelAndHoldAtTime === 'function') gain.cancelAndHoldAtTime(now);
+      else { const current = gain.value; gain.cancelScheduledValues(now); gain.setValueAtTime(current, now); }
+      if (target === 0) {
+        gain.setValueAtTime(Math.max(.0001, gain.value), now);
+        gain.exponentialRampToValueAtTime(.0001, now + duration / 1000);
+      } else {
+        gain.linearRampToValueAtTime(target, now + duration / 1000);
+      }
+      return;
+    }
+    const from = music.volume;
+    const started = performance.now();
+    function tick(now) {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = target === 0 ? 1 - Math.pow(1 - progress, 3) : progress * progress * (3 - 2 * progress);
+      music.volume = from + (target - from) * eased;
+      if (progress < 1) musicFadeFrame = requestAnimationFrame(tick);
+    }
+    musicFadeFrame = requestAnimationFrame(tick);
+  }
+  function startMusic() {
+    clearTimeout(musicStopTimer);
+    musicEnding = false;
+    prepareMusic();
+    if (music.ended) music.currentTime = 0;
+    music.play().then(() => {
+      if (state === 'opening' || state === 'open') fadeMusic(musicVolume, 1500);
+    }).catch(() => {});
+  }
+  function stopMusic() {
+    clearTimeout(musicStopTimer);
+    fadeMusic(0, 1500);
+    musicStopTimer = setTimeout(() => music.pause(), 1550);
+  }
+  music.addEventListener('timeupdate', () => {
+    if (musicEnding || music.paused || (state !== 'opening' && state !== 'open')) return;
+    const remaining = music.duration - music.currentTime;
+    if (Number.isFinite(remaining) && remaining > 0 && remaining <= 1.5) {
+      musicEnding = true;
+      fadeMusic(0, remaining * 1000);
+    }
+  });
+  // The paper rustle is synthesized locally.
   function getAudio() {
     try {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -91,23 +157,6 @@
       if (audio.state === 'suspended') audio.resume().catch(() => {});
       return audio;
     } catch { return null; }
-  }
-  function chime() {
-    const ctx = getAudio();
-    if (!ctx) return;
-    [523.25, 659.25, 783.99, 1046.5, 987.77, 783.99].forEach((frequency, index) => {
-      const start = ctx.currentTime + index * .19;
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-      oscillator.type = 'sine';
-      oscillator.frequency.value = frequency;
-      gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(.065, start + .025);
-      gain.gain.exponentialRampToValueAtTime(.001, start + 1.6);
-      oscillator.connect(gain).connect(ctx.destination);
-      oscillator.start(start);
-      oscillator.stop(start + 1.7);
-    });
   }
   function paper() {
     const ctx = getAudio();
@@ -121,12 +170,42 @@
     source.buffer = buffer;
     filter.type = 'bandpass'; filter.frequency.value = 1600; filter.Q.value = .6;
     gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(.14, ctx.currentTime + .12);
+    gain.gain.linearRampToValueAtTime(.24, ctx.currentTime + .12);
     gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .6);
     source.connect(filter).connect(gain).connect(ctx.destination);
     source.start();
   }
+  function confettiSound() {
+    const ctx = getAudio();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * .3), ctx.sampleRate);
+    const samples = buffer.getChannelData(0);
+    for (let i = 0; i < samples.length; i++) samples[i] = (Math.random() * 2 - 1) * .5;
+    const pop = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+    pop.buffer = buffer;
+    filter.type = 'highpass'; filter.frequency.value = 1100;
+    gain.gain.setValueAtTime(.0001, now);
+    gain.gain.exponentialRampToValueAtTime(.55, now + .012);
+    gain.gain.exponentialRampToValueAtTime(.0001, now + .3);
+    pop.connect(filter).connect(gain).connect(ctx.destination);
+    pop.start(now);
+    [1046.5, 1318.5, 1568].forEach((frequency, index) => {
+      const tone = ctx.createOscillator();
+      const level = ctx.createGain();
+      const start = now + .06 + index * .11;
+      tone.type = 'sine'; tone.frequency.value = frequency;
+      level.gain.setValueAtTime(.0001, start);
+      level.gain.exponentialRampToValueAtTime(.12, start + .015);
+      level.gain.exponentialRampToValueAtTime(.0001, start + .65);
+      tone.connect(level).connect(ctx.destination);
+      tone.start(start); tone.stop(start + .7);
+    });
+  }
   function celebrate() {
+    confettiSound();
     if (reducedMotion.matches) return;
     const container = document.querySelector('#confetti');
     container.replaceChildren();
@@ -143,6 +222,7 @@
     if (state !== 'closed') return;
     state = 'opening';
     lastFocus = document.activeElement;
+    startMusic();
     getAudio();
     paper();
     document.body.classList.add('opening');
@@ -158,7 +238,6 @@
         overlay.classList.add('visible');
         state = 'open';
         closeButton.focus({preventScroll:true});
-        chime();
         celebrate();
       }));
     }, reducedMotion.matches ? 0 : 950);
@@ -166,6 +245,7 @@
   function close() {
     if (state !== 'open') return;
     state = 'closing';
+    stopMusic();
     timers.forEach(clearTimeout); timers = [];
     document.querySelector('#confetti').replaceChildren();
     overlay.classList.remove('visible');
@@ -254,4 +334,5 @@
     stars.append(star);
   }
 })();
+
 
