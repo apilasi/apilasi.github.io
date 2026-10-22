@@ -7,7 +7,7 @@
 @media(min-width:1000px) and (min-height:850px){main{padding-top:75px}.scene{margin-top:55px;height:435px}footer{margin-top:48px}}
 @media(max-width:600px){.topbar{height:77px;margin:0 6%}.wordmark{font-size:20px}main{padding:47px 16px 25px}.eyebrow{font-size:7px;letter-spacing:1.6px;margin-bottom:18px}h1{font-size:44px;letter-spacing:-1.6px}h1 em{display:block}.subtitle{font-size:18px;margin-top:16px}.scene{height:335px;margin-top:22px}.envelope-wrap{width:min(80vw,340px);height:auto;aspect-ratio:390/253}.seal{width:49px;height:49px}.seal span{font-size:25px}.name{font-size:33px}.to{font-size:11px}.postmark{width:52px;height:52px;right:12px;bottom:12px}.postmark span,.postmark small{font-size:4px}.postmark b{font-size:22px;line-height:25px}.side-note{right:2%;top:6%;font-size:15px;width:115px;transform:rotate(9deg)}.orbit-one{left:1%;top:45%;font-size:30px}.orbit-two{right:2%;top:66%;font-size:20px}.invitation{bottom:-3px}.invitation button{font-size:29px}footer{margin-top:34px;font-size:7px}.letter-overlay{padding:28px 22px}.letter{padding:23px 27px 17px}h2{font-size:56px}.message{font-size:24px}.desktop-break{display:none}.letter-dear{margin-top:23px}.letter-sign{font-size:21px;margin-top:23px}.letter-sign strong{font-size:22px}.letter-dialog{max-width:390px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.star{opacity:.3}.letter-dialog{transform:none}.petal{display:none}}
-/* The invitation lives beneath the envelope, with two playful paper buttons. */
+
 .scene{height:310px;margin-top:25px}
 footer.open-question{display:flex;flex-direction:column;gap:0;margin:8px auto 0;letter-spacing:0;width:min(100%,360px);font-size:inherit}
 .open-question p{font-family:Caveat,cursive;font-size:32px;color:#dfb4b3;margin:0 0 8px;line-height:1.1}
@@ -23,7 +23,6 @@ footer.open-question{display:flex;flex-direction:column;gap:0;margin:8px auto 0;
 @media(min-width:1000px) and (min-height:850px){.scene{height:340px;margin-top:35px}footer.open-question{margin-top:8px}}
 @media(max-width:600px){.scene{height:270px;margin-top:20px}footer.open-question{margin-top:0}.open-question p{font-size:30px}.choices{height:110px}.wordmark{font-size:19px}}
 
-/* Opening sequence: font loading cannot move an already visible composition. */
 .loading-screen{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#21171e;overflow:hidden;transition:background-color 1.7s ease,opacity .3s ease,visibility 0s .3s;pointer-events:all}
 .loading-screen[hidden]{display:none}
 .loading-glow{position:absolute;inset:0;background:radial-gradient(ellipse at center,#83505b55 0%,#3d24313b 38%,transparent 70%);animation:background-arrive 1.8s ease both}
@@ -59,7 +58,7 @@ footer.open-question{display:flex;flex-direction:column;gap:0;margin:8px auto 0;
 @media(max-width:360px){.word-heart{transform:scale(.85)}}
 @media(prefers-reduced-motion:reduce){.word-heart span{opacity:1}.loading-screen{transition:none}.is-ready .topbar,.is-ready main,.is-ready .scene{visibility:visible}.is-finished .word-heart{transform:none;filter:none}}
 .is-finished .word-heart{animation:none}
-/* Keep the card tactile without browser selection or long-press menus. */
+
 html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .closing-envelope .letter-preview{transition:transform .65s var(--ease)}
 .closing-envelope .flap{transition:transform .65s var(--ease) .7s,filter .65s ease .7s;animation:close-flap-layer 1.4s step-end both}
@@ -74,10 +73,10 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
   .scene{width:100%;height:clamp(230px,31svh,280px);flex-shrink:0}
   footer.open-question{flex-shrink:0}
 }
-/* Center the opened letter on both axes; oversized letters remain scrollable. */
+
 .letter-overlay{display:flex}
 .letter-dialog{flex-shrink:0;margin:auto}
-/* A small printed keepsake, tucked below the handwritten wishes. */
+
 .letter-keepsake{display:flex;align-items:center;gap:22px;margin:26px 0 24px}
 .photo-print{position:relative;flex:0 0 156px;margin:6px 0 8px 4px;padding:7px 7px 19px;background:#fffefa;transform:rotate(-7deg);box-shadow:0 3px 5px #59402c20,0 10px 20px #59402c1c;border:1px solid #d8cfc34d}
 .photo-print:before{content:"";position:absolute;top:-10px;left:calc(50% - 24px);width:48px;height:19px;background:#d8c3a98c;transform:rotate(9deg);box-shadow:0 1px 2px #7b624c12;z-index:1}
@@ -89,7 +88,6 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 @media(max-width:600px){.letter-keepsake{gap:15px;margin:25px 0 22px}.photo-print{flex-basis:46%;padding:6px 6px 16px;margin-left:1px}.letter-keepsake .letter-sign{font-size:20px}.letter-keepsake .letter-sign strong{font-size:20px}}
 .message .smile{display:inline-flex;align-items:center;gap:0;white-space:nowrap;vertical-align:middle}.brick-sticker{display:block;width:28px;height:24px;object-fit:contain;transform:translateY(-3px) rotate(-8deg);margin-left:-3px}
 
-/* Keep attention on the envelope throughout both opening and closing. */
 .intro,.topbar,.stars,.side-note,.orbit,.ambient{transition:filter .6s ease}
 .opening .intro,.closing-envelope .intro,
 .opening .topbar,.closing-envelope .topbar{filter:blur(8px) brightness(.3);pointer-events:none}
@@ -99,7 +97,7 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 .opening .ambient,.closing-envelope .ambient{filter:brightness(.55)}
 .open-question{transition:opacity .5s ease,filter .5s ease}
 .opening .open-question,.closing-envelope .open-question{opacity:0;filter:blur(8px);pointer-events:none}
-/* Compact, gentle paper motion with softly eased starts and stops. */
+
 :root{--paper-ease:cubic-bezier(.3,.05,.25,1)}
 .envelope{transition:transform .65s var(--paper-ease),filter .65s ease}
 .flap{transition:transform .65s var(--paper-ease) .08s,filter .65s ease}
@@ -127,7 +125,7 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 .visible .letter-bottom{animation:soft-reveal .6s ease .35s both}
 .visible .photo-print{animation:photo-arrive .6s var(--paper-ease) .3s both}
 @media(prefers-reduced-motion:reduce){.letter-dialog{transform:none}}
-/* A handwritten sound reminder appears after the heart has formed. */
+
 .loading-screen{grid-template-columns:minmax(0,1fr)}
 .loading-composition{position:relative;width:340px;justify-self:center;text-align:center}
 .loading-note{position:relative;margin:20px 0 0;font-family:Caveat,cursive;font-size:29px;line-height:1.3;color:#dfb4b3;opacity:0;filter:blur(4px);transform:translateY(9px);transition:opacity .8s ease,transform .8s var(--ease),filter .8s ease}
@@ -137,7 +135,7 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 .is-dissolving .loading-note{opacity:0;filter:blur(7px);transform:translateY(-8px);transition-duration:1.3s}
 @media(max-width:360px){.loading-composition{transform:scale(.85)}}
 @media(prefers-reduced-motion:reduce){.loading-note{transform:none;filter:none}.is-dissolving .loading-note{transform:none;filter:none}}
-/* The heart stays at the screen center; captions do not shift its layout. */
+
 .loading-composition{width:340px;height:300px;transform:none;transform-origin:center}
 .loading-note{position:absolute;margin:0;left:0;width:100%;white-space:nowrap}
 .heart-message{top:132px;font-size:27px;line-height:1.3}
@@ -146,3 +144,45 @@ html,body,body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout
 @media(max-width:340px){.loading-composition{transform:scale(.8)}}
 @media(max-height:480px){.loading-composition{transform:scale(.75)}}
 @media(prefers-reduced-motion:reduce){.loading-composition .word-heart{transform:none}}
+
+.envelope{transform-style:preserve-3d}
+.envelope-back{z-index:0;background:linear-gradient(#c9bba5,#e3d4bc);border-radius:6px}
+.flap{inset:auto;left:-.5px;top:0;width:calc(100% + 1px);height:60%;background:none;clip-path:none;filter:none;transform-style:preserve-3d;transform-origin:50% 0;backface-visibility:visible;z-index:5;transition:transform .66s var(--paper-ease) .04s}
+.flap-face{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flap-outside{background:linear-gradient(165deg,#f5ead8,#e3d2b9)}
+.flap-inside{background:linear-gradient(0deg,#bbae98,#d6c9b3);transform:rotateX(180deg)}
+.opening .flap{z-index:5;filter:none;transform:rotateX(180deg)}
+.opening.flap-raised .flap{z-index:1}
+.pocket{inset:-.5px;border-radius:6px;background:none;clip-path:none;overflow:hidden;z-index:3}
+.pocket svg{display:block;width:100%;height:100%;overflow:visible}
+.letter-preview{left:6%;right:6%;top:9%;bottom:auto;height:62%;z-index:2;border:1px solid #d9c9af;background:linear-gradient(0deg,transparent 49.4%,#cdbb9e55 50%,transparent 50.7%),#f6eddd;box-shadow:0 2px 1px #e6d8c2,0 5px 0 -1px #ebdfca,0 7px 0 -2px #dacbb4;transition:transform .65s var(--paper-ease) .4s}
+.opening .letter-preview{transform:translateY(-126%)}
+.closing-envelope .letter-preview{transition:transform .55s var(--paper-ease)}
+.closing-envelope .flap{filter:none;z-index:1;animation:none;transition:transform .62s var(--paper-ease) .6s}
+.closing-envelope.flap-front .flap{z-index:5}
+.closing-envelope .seal{transition:opacity .22s ease 1.22s,transform .22s var(--paper-ease) 1.22s}
+
+.letter{padding:0;background:none;box-shadow:none;perspective:1500px;filter:drop-shadow(0 14px 30px #0004);isolation:isolate}
+.letter-panel{position:relative;background:#f6eddd;transform-style:preserve-3d;backface-visibility:visible}
+.panel-inner{position:relative;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.letter-panel:after{content:"";position:absolute;inset:0;background:linear-gradient(#e4d7c1,#f0e4d0);transform:rotateX(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;pointer-events:none}
+.letter-panel-top{padding:27px 42px 0;border-radius:3px 3px 0 0;transform-origin:50% 100%;transform:rotateX(-179deg);z-index:3;transition:transform .55s var(--paper-ease)}
+.letter-panel-middle{padding:1px 42px 15px;z-index:1;box-shadow:inset 0 1px #d7c6aa66,inset 0 -1px #d7c6aa55}
+.letter-panel-bottom{padding:1px 42px 21px;border-radius:0 0 3px 3px;transform-origin:50% 0;transform:rotateX(179deg);z-index:2;transition:transform .5s var(--paper-ease)}
+.visible .letter-panel-top{transform:rotateX(0);transition-duration:.8s;transition-delay:.06s}
+.visible .letter-panel-bottom{transform:rotateX(0);transition-duration:.8s;transition-delay:.22s}
+.letter-dialog{transform:translateY(-34px) rotate(-1deg) scale(.86);transition:transform .85s var(--paper-ease),opacity .55s ease}
+.letter-overlay{transition:opacity .6s ease}
+.visible .letter-top,.visible .letter-dear,.visible h2{animation:text-arrive .45s ease .52s both}
+.visible .message{animation:text-arrive .45s ease .4s both}
+.visible .letter-sign,.visible .letter-bottom{animation:soft-reveal .45s ease .75s both}
+.visible .photo-print{animation:photo-arrive .55s var(--paper-ease) .68s both}
+@media(max-width:600px){.letter-panel-top{padding:23px 27px 0}.letter-panel-middle{padding:1px 27px 12px}.letter-panel-bottom{padding:1px 27px 17px}}
+@media(prefers-reduced-motion:reduce){.letter-dialog,.letter-panel-top,.letter-panel-bottom{transform:none}.letter-panel:after{display:none}}
+
+.flap-inside{clip-path:polygon(0 100%,100% 100%,50% 0)}
+.closing-envelope .envelope{transform:rotate(0)}
+.letter-panel-middle{box-shadow:inset 0 1px #d7c6aa12,inset 0 -1px #d7c6aa10}
+.close{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility 0s .25s}
+.visible .close{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .25s ease .5s,visibility 0s .5s}
+@media(prefers-reduced-motion:reduce){.visible .close{transition-delay:0s}}

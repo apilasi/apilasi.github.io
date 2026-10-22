@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#21171e">
-  <meta name="description" content="Одно маленькое письмо для Полины. С днём рождения!">
   <title>Твой дед &lt;3</title>
   <link rel="icon" type="image/webp" href="assets/ced7856ac3.webp">
   <link rel="stylesheet" href="style.css">
@@ -12,11 +11,10 @@
 </head>
 <body class="is-loading">
   <audio id="birthday-music" src="123.mp3" preload="auto"></audio>
-  <div class="loading-screen" id="loading-screen" role="status" aria-label="Загружаем письмо для Полины">
+  <div class="loading-screen" id="loading-screen">
     <div class="loading-glow" aria-hidden="true"></div>
     <div class="loading-composition">
       <div class="word-heart" id="word-heart" aria-hidden="true"></div>
-      <p class="loading-note heart-message">я старался👉👈😝</p>
       <p class="loading-note sound-reminder">включи звук)</p>
     </div>
   </div>
@@ -31,15 +29,27 @@
       <h1>Для тебя)</h1>
       <p class="subtitle">дурачка блин</p>
     </div>
-    <section class="scene" aria-label="Поздравительное письмо для Полины">
+    <section class="scene">
       <span class="orbit orbit-one" aria-hidden="true">✧</span><span class="orbit orbit-two" aria-hidden="true">✦</span>
       <span class="side-note" aria-hidden="true">с самыми тёплыми пожеланиями</span>
       <div class="envelope-wrap" id="envelope-wrap">
-        <button class="envelope" id="envelope" aria-label="Открыть письмо для Полины" aria-expanded="false" aria-controls="letter">
+        <button class="envelope" id="envelope" aria-label="Открыть" aria-expanded="false" aria-controls="letter">
           <span class="envelope-back"></span>
           <span class="letter-preview"></span>
-          <span class="flap"></span>
-          <span class="pocket"></span>
+          <span class="flap" aria-hidden="true"><span class="flap-face flap-outside"></span><span class="flap-face flap-inside"></span></span>
+          <span class="pocket" aria-hidden="true">
+            <svg viewBox="0 0 390 253" preserveAspectRatio="none" focusable="false">
+              <defs>
+                <linearGradient id="pocket-left" x2="1" y2="1"><stop stop-color="#f0e4d0"/><stop offset="1" stop-color="#dfcfb5"/></linearGradient>
+                <linearGradient id="pocket-right" x1="1" x2="0" y2="1"><stop stop-color="#efe3ce"/><stop offset="1" stop-color="#e4d5bc"/></linearGradient>
+                <linearGradient id="pocket-bottom" x2="0" y2="1"><stop stop-color="#f4e9d6"/><stop offset="1" stop-color="#e6d7be"/></linearGradient>
+              </defs>
+              <path d="M-1 -1 202 131 -1 254Z" fill="url(#pocket-left)"/>
+              <path d="M391 -1 188 131 391 254Z" fill="url(#pocket-right)"/>
+              <path d="M-2 254 195 124 392 254Z" fill="url(#pocket-bottom)"/>
+              <path d="M0 253 195 125 390 253" fill="none" stroke="#b6a184" stroke-opacity=".25" stroke-width="1"/>
+            </svg>
+          </span>
           <span class="address"><span class="to">кому</span><span class="name">Апиласе</span><span class="address-line"></span></span>
           <span class="postmark" aria-hidden="true"><span>С ДНЁМ РОЖДЕНИЯ</span><b>♡</b><small>ДОСТАВЛЕНО С ТЕПЛОМ</small></span>
           <span class="seal" aria-hidden="true"><span>П</span></span>
@@ -56,18 +66,24 @@
   </main>
   <div class="letter-overlay" id="overlay" hidden>
     <div class="letter-dialog" role="dialog" aria-modal="true" aria-labelledby="letter-title" tabindex="-1">
-      <button class="close" id="close" aria-label="Закрыть письмо" type="button">×</button>
+      <button class="close" id="close" aria-label="Закрыть" type="button">×</button>
       <article class="letter" id="letter">
+        <div class="letter-panel letter-panel-top"><div class="panel-inner">
         <div class="letter-top"><span>ЛИЧНО В РУКИ</span><span>♡</span></div>
         <p class="letter-dear">Полинаа,</p>
         <h2 id="letter-title">с днём<br><em>рождения!)</em></h2>
+        </div></div>
+        <div class="letter-panel letter-panel-middle"><div class="panel-inner">
         <div class="letter-rule"><span>✧</span></div>
         <p class="message">Желаю тебе всего наипрекрасного,<br class="desktop-break"> чтобы хорошо школу закончила,<br class="desktop-break"> И чтобы тебя все любили) <span class="smile">😊 <img class="brick-sticker" src="assets/brick-transparent.png" alt="кирпич" width="32" height="32" draggable="false"></span></p>
+        </div></div>
+        <div class="letter-panel letter-panel-bottom"><div class="panel-inner">
         <div class="letter-keepsake">
-          <figure class="photo-print"><img src="assets/apilase.png" width="736" height="723" alt="Девочка с розовыми волосами держит поздравительную записку с сердечками" draggable="false"></figure>
+          <figure class="photo-print"><img src="assets/apilase.png" width="736" height="723" alt="" draggable="false"></figure>
           <div class="letter-sign"><span>Обнимаю,</span><strong>и пусть всё сбудется ♡</strong></div>
         </div>
         <div class="letter-bottom"><span>проведи этот день хорошо</span><span class="flower" aria-hidden="true">✳</span></div>
+        </div></div>
       </article>
     </div>
   </div>

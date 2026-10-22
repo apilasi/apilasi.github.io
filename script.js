@@ -24,15 +24,12 @@
   document.addEventListener('contextmenu', event => event.preventDefault());
   document.addEventListener('selectstart', event => event.preventDefault());
   document.addEventListener('dragstart', event => event.preventDefault());
-
-  // Keep the layout hidden until local fonts settle, then reveal it in order.
   const loadingScreen = document.querySelector('#loading-screen');
   const wordHeart = document.querySelector('#word-heart');
   const pageHeader = document.querySelector('header');
   const pageMain = document.querySelector('main');
   pageHeader.inert = true;
   pageMain.inert = true;
-  // Sample a smooth heart by arc length: words stay evenly spaced on its outline.
   const contour = [];
   let perimeter = 0;
   const curves = [
@@ -67,7 +64,6 @@
   ]).then(async () => {
     loadingScreen.classList.add('has-note');
     await new Promise(resolve => setTimeout(resolve, reducedMotion.matches ? 1200 : 2100));
-    // Crossfade the heart and the card together, on the same background.
     document.body.classList.remove('is-loading');
     document.body.classList.add('is-ready');
     loadingScreen.classList.add('is-dissolving');
@@ -90,8 +86,6 @@
     pageMain.inert = false;
     setTimeout(() => { loadingScreen.hidden = true; }, reducedMotion.matches ? 0 : 300);
   });
-
-  // Music starts in the click handler so mobile browsers allow playback.
   function prepareMusic() {
     const ctx = getAudio();
     if (!ctx || musicGain) return;
@@ -101,7 +95,7 @@
       musicGain.gain.value = 0;
       source.connect(musicGain).connect(ctx.destination);
       music.volume = 1;
-    } catch { /* Use the media element volume if Web Audio is unavailable. */ }
+    } catch {  }
   }
   function fadeMusic(target, duration) {
     cancelAnimationFrame(musicFadeFrame);
@@ -150,7 +144,6 @@
       fadeMusic(0, remaining * 1000);
     }
   });
-  // The paper rustle is synthesized locally.
   function getAudio() {
     try {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -228,6 +221,7 @@
     getAudio();
     paper();
     document.body.classList.add('opening');
+    later(() => document.body.classList.add('flap-raised'), reducedMotion.matches ? 0 : 340);
     envelope.setAttribute('aria-expanded', 'true');
     envelope.disabled = true;
     openLink.disabled = true;
@@ -239,10 +233,10 @@
       requestAnimationFrame(() => requestAnimationFrame(() => {
         overlay.classList.add('visible');
         state = 'open';
-        closeButton.focus({preventScroll:true});
-        celebrate();
+        later(() => closeButton.focus({preventScroll:true}), reducedMotion.matches ? 0 : 510);
+        later(celebrate, reducedMotion.matches ? 0 : 650);
       }));
-    }, reducedMotion.matches ? 0 : 950);
+    }, reducedMotion.matches ? 0 : 1050);
   }
   function close() {
     if (state !== 'open') return;
@@ -256,18 +250,19 @@
       overlay.hidden = true;
       document.body.classList.add('closing-envelope');
       document.body.classList.remove('opening');
+      later(() => document.body.classList.add('flap-front'), reducedMotion.matches ? 0 : 900);
       document.body.style.overflow = '';
       document.querySelector('header').inert = false;
       document.querySelector('main').inert = false;
       later(() => {
-        document.body.classList.remove('closing-envelope');
+        document.body.classList.remove('closing-envelope', 'flap-raised', 'flap-front');
         envelope.setAttribute('aria-expanded','false');
         envelope.disabled = false;
         openLink.disabled = false;
         state = 'closed';
         (lastFocus || envelope).focus({preventScroll:true});
-      }, reducedMotion.matches ? 0 : 1350);
-    }, reducedMotion.matches ? 0 : 500);
+      }, reducedMotion.matches ? 0 : 1450);
+    }, reducedMotion.matches ? 0 : 650);
   }
   envelope.addEventListener('click', open);
   openLink.addEventListener('click', open);
@@ -313,7 +308,6 @@
   noButton.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') dodge(event); });
   noButton.addEventListener('click', event => {
     if (noBecameYes) { open(); return; }
-    // A mouse already triggers pointerenter; do not count its click twice.
     if (event.pointerType === 'mouse' && event.detail > 0) return;
     dodge(event);
   });
@@ -336,5 +330,4 @@
     stars.append(star);
   }
 })();
-
 
